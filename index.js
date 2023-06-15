@@ -1,30 +1,30 @@
-const express = require('express')
-const { myServer } = require('./configs/db')
-const { userRoutes } = require('./routes/User.routes')
-const { auth } = require('./middleware/auth.middleware')
-const { blogRoutes } = require('./routes/Blog.routes')
+const express = require("express");
+const { myServer } = require("./configs/db");
+const { userRoutes } = require("./routes/User.routes");
+const { auth } = require("./middleware/auth.middleware");
+const { blogRoutes } = require("./routes/Blog.routes");
+const cors = require("cors");
 
-require('dotenv').config()
-const app = express()
-const PORT = process.env.PORT
+require("dotenv").config();
+const app = express();
+const PORT = process.env.PORT;
 
-app.use(express.json())
+app.use(cors());
 
-app.use('/api', userRoutes)
-app.use(auth)
+app.use(express.json());
 
-app.use('/api/blogs', blogRoutes)
+app.use("/api", userRoutes);
+app.use(auth);
 
+app.use("/api/blogs", blogRoutes);
 
+app.listen(PORT, async () => {
+  try {
+    await myServer;
+    console.log("Connected to DB");
+  } catch (error) {
+    console.log(error);
+  }
 
-app.listen(PORT, async()=> {
-
-    try {
-        await myServer
-        console.log('Connected to DB');
-    } catch (error) {
-        console.log(error);
-    }
-
-console.log(`server started at` +' '+PORT);
-})
+  console.log(`server started at` + " " + PORT);
+});
