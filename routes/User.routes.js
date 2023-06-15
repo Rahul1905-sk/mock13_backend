@@ -49,10 +49,12 @@ userRoutes.post("/login", async (req, res) => {
               }
             }
           );
+        } else {
+          res.status(200).send({ msg: "Login Failed" });
         }
       });
     } else {
-      res.status(200).send({ msg: "Please Singup First" });
+      res.status(200).send({ msg: "Please Signup First" });
     }
   } catch (error) {
     res.status(400).send({ err: error.message });
